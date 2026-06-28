@@ -332,6 +332,80 @@
     margin-top: 4px;
   }
 
+  /* SEARCH BAR */
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    padding: 0 24px 24px;
+  }
+
+  .search-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: var(--muted);
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 40px 11px 40px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.18s ease;
+  }
+
+  .search-input::placeholder { color: var(--muted); }
+  .search-input:focus { border-color: rgba(177,79,255,0.5); }
+
+  .search-clear {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px;
+    display: none;
+    line-height: 1;
+  }
+
+  .search-clear.visible { display: block; }
+
+  .search-results-label {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    padding-bottom: 20px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--muted);
+    font-size: 15px;
+    display: none;
+  }
+
+  .exercise-card.search-hidden { display: none; }
+
   /* HIDDEN */
   .level-section.hidden { display: none; }
   .exercise-card.hidden { display: none; }
@@ -373,6 +447,16 @@
   <p>Interactive exercises for every level — A1 to B2. No signup. No paywall. Just practice.</p>
 </section>
 
+<div class="search-bar">
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="search-input" type="text" placeholder="Search exercises... (e.g. subjuntivo, ser vs estar)" oninput="handleSearch(this.value)">
+    <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
+  </div>
+</div>
+<div class="search-results-label" id="search-results-label" style="display:none"></div>
+<div class="no-results" id="no-results">No exercises found for "<span id="no-results-query"></span>" 😕<br><small style="display:block;margin-top:8px;font-size:12px;">Try searching in Spanish or English</small></div>
+
 <div class="filter-bar">
   <button class="filter-btn active" data-level="ALL" onclick="filterLevel('ALL')">All levels</button>
   <button class="filter-btn" data-level="A1" onclick="filterLevel('A1')">A1 — Beginner</button>
@@ -386,7 +470,7 @@
   <!-- STATS -->
   <div class="stats-bar">
     <div class="stat">
-      <div class="stat-number">48</div>
+      <div class="stat-number">54</div>
       <div class="stat-label">Exercises</div>
     </div>
     <div class="stat">
@@ -408,7 +492,7 @@
     <div class="level-header">
       <div class="level-pill a1">A1</div>
       <div class="level-title">Beginner</div>
-      <div class="level-count">8 exercises</div>
+      <div class="level-count">10 exercises</div>
     </div>
     <div class="divider"></div>
     <div class="exercise-grid">
@@ -468,6 +552,20 @@
         </div>
         <div class="card-arrow">→</div>
       </a>
+      <a class="exercise-card" data-level="A1" href="https://carlosalbertoramirez.github.io/Saludos-b-sicos/" target="_blank">
+        <div class="card-info">
+          <div class="card-name">Saludos y Presentaciones</div>
+          <div class="card-topic">Speaking · A1</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a class="exercise-card" data-level="A1" href="https://carlosalbertoramirez.github.io/reflexivos-/" target="_blank">
+        <div class="card-info">
+          <div class="card-name">Verbos Reflexivos — Me, te, se...</div>
+          <div class="card-topic">Grammar · A1</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
     </div>
   </div>
 
@@ -476,7 +574,7 @@
     <div class="level-header">
       <div class="level-pill a2">A2</div>
       <div class="level-title">Basic</div>
-      <div class="level-count">17 exercises</div>
+      <div class="level-count">20 exercises</div>
     </div>
     <div class="divider"></div>
     <div class="exercise-grid">
@@ -606,6 +704,27 @@
         </div>
         <div class="card-arrow">→</div>
       </a>
+      <a class="exercise-card" data-level="A2" href="https://carlosalbertoramirez.github.io/preterito-vs-imperfecto-2.0/" target="_blank">
+        <div class="card-info">
+          <div class="card-name">Pretérito vs Imperfecto — Round 2</div>
+          <div class="card-topic">Tenses · A2</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a class="exercise-card" data-level="A2" href="https://carlosalbertoramirez.github.io/Cultura-mexicana/" target="_blank">
+        <div class="card-info">
+          <div class="card-name">Cultura Mexicana — Vocabulario y Tradiciones</div>
+          <div class="card-topic">Culture · A2</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a class="exercise-card" data-level="A2" href="https://carlosalbertoramirez.github.io/OD-OI-/" target="_blank">
+        <div class="card-info">
+          <div class="card-name">Objetos Directo e Indirecto — Domínalos</div>
+          <div class="card-topic">Pronouns · A2</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
     </div>
   </div>
 
@@ -614,7 +733,7 @@
     <div class="level-header">
       <div class="level-pill b1">B1</div>
       <div class="level-title">Intermediate</div>
-      <div class="level-count">14 exercises</div>
+      <div class="level-count">16 exercises</div>
     </div>
     <div class="divider"></div>
     <div class="exercise-grid">
@@ -723,6 +842,13 @@
         </div>
         <div class="card-arrow">→</div>
       </a>
+      <a class="exercise-card" data-level="B1" href="https://carlosalbertoramirez.github.io/M-xican-slang-/" target="_blank">
+        <div class="card-info">
+          <div class="card-name">Mexican Slang 🌮 — Habla como chilango</div>
+          <div class="card-topic">Vocabulary · B1</div>
+        </div>
+        <div class="card-arrow">→</div>
+      </a>
     </div>
   </div>
 
@@ -767,12 +893,9 @@
 
 <script>
   function filterLevel(level) {
-    // Update active button
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.level === level);
     });
-
-    // Show/hide sections
     document.querySelectorAll('.level-section').forEach(section => {
       if (level === 'ALL' || section.dataset.section === level) {
         section.classList.remove('hidden');
@@ -780,6 +903,72 @@
         section.classList.add('hidden');
       }
     });
+    clearSearch();
+  }
+
+  function handleSearch(query) {
+    const q = query.trim().toLowerCase();
+    const clearBtn = document.getElementById('search-clear');
+    const resultsLabel = document.getElementById('search-results-label');
+    const noResults = document.getElementById('no-results');
+    const filterBar = document.querySelector('.filter-bar');
+
+    clearBtn.classList.toggle('visible', q.length > 0);
+
+    if (!q) {
+      clearSearch();
+      return;
+    }
+
+    // Hide filter buttons when searching
+    filterBar.style.opacity = '0.4';
+    filterBar.style.pointerEvents = 'none';
+
+    // Reset level filter visually
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+
+    let matchCount = 0;
+    document.querySelectorAll('.level-section').forEach(section => {
+      section.classList.remove('hidden');
+      let sectionHasMatch = false;
+      section.querySelectorAll('.exercise-card').forEach(card => {
+        const name = card.querySelector('.card-name').textContent.toLowerCase();
+        const topic = card.querySelector('.card-topic').textContent.toLowerCase();
+        const matches = name.includes(q) || topic.includes(q);
+        card.classList.toggle('search-hidden', !matches);
+        if (matches) { sectionHasMatch = true; matchCount++; }
+      });
+      section.style.display = sectionHasMatch ? '' : 'none';
+    });
+
+    noResults.style.display = matchCount === 0 ? 'block' : 'none';
+    document.getElementById('no-results-query').textContent = query;
+
+    if (matchCount > 0) {
+      resultsLabel.style.display = 'block';
+      resultsLabel.textContent = `${matchCount} exercise${matchCount !== 1 ? 's' : ''} found`;
+    } else {
+      resultsLabel.style.display = 'none';
+    }
+  }
+
+  function clearSearch() {
+    const input = document.getElementById('search-input');
+    const clearBtn = document.getElementById('search-clear');
+    const resultsLabel = document.getElementById('search-results-label');
+    const noResults = document.getElementById('no-results');
+    const filterBar = document.querySelector('.filter-bar');
+
+    input.value = '';
+    clearBtn.classList.remove('visible');
+    resultsLabel.style.display = 'none';
+    noResults.style.display = 'none';
+    filterBar.style.opacity = '1';
+    filterBar.style.pointerEvents = '';
+
+    document.querySelectorAll('.exercise-card').forEach(card => card.classList.remove('search-hidden'));
+    document.querySelectorAll('.level-section').forEach(s => { s.classList.remove('hidden'); s.style.display = ''; });
+    document.querySelector('.filter-btn[data-level="ALL"]').classList.add('active');
   }
 </script>
 
